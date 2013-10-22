@@ -1,0 +1,23 @@
+{
+    "name": "dosomething/teensforjeans",
+    "description": "",
+    "authors": [
+        {
+            "name": "Matt Holford",
+            "email": "mholford@dosomething.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Dosomething\\Teensforjeans": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
