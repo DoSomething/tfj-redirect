@@ -6,3 +6,6 @@ build:
         code: |-
             cd www
             composer install --no-interaction
+deploy:
+    steps:
+        - cap
