@@ -2,6 +2,13 @@
 # man page for details on VCL syntax and semantics.
 #
 
+# Include the Geo-IP VCL file.
+# Details here: https://github.com/cosimo/varnish-geoip
+#
+# Ubuntu headers install here:
+# /usr/local/include/GeoIPCity.h  /usr/local/include/GeoIP.h
+include "/etc/varnish/geoip.vcl";
+
 # Define the internal network subnet.
 # These are used below to allow internal access to certain files while not
 # allowing access from the public internet.
@@ -26,6 +33,15 @@ sub vcl_recv {
 
   # Allow the backend to serve up stale content if it is responding slowly.
   set req.grace = 6h;
+  
+  # Lookup IP only for the first request restart
+  if (req.restarts == 0) {
+      if (req.request == "GET" || req.request == "POST") {
+          C{
+              vcl_geoip_set_header(sp);
+          }C
+      }
+  }
   
   # Pass directly to app server for now.
   return (pass);

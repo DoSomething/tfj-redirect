@@ -36,6 +36,19 @@ pear-misc:
     - require:
       - pkg: php5-pkgs
 
+php-composer:
+  cmd.run:
+    - name: /usr/bin/curl -sS https://getcomposer.org/installer | php
+    - require:
+      - pkg: php5-pkgs
+      - pkg: curl
+
+php-composer-build:
+  cmd.run:
+    - name: cd /vagrant/www ; /usr/bin/php composer.phar update ; /usr/bin/php composer.phar install
+    - require:
+      - cmd: php-composer
+
 apache2-env:
   file.managed:
     - name: /etc/apache2/envvars
@@ -98,6 +111,13 @@ varnish-config:
   file.managed:
     - name: /etc/varnish/default.vcl
     - source: salt://varnishd/tfj-redirect.vcl
+    - require:
+      - pkg: varnish
+
+varnish-geoip:
+  file.managed:
+    - name: /etc/varnish/geoip.vcl
+    - source: salt://varnishd/geoip.vcl
     - require:
       - pkg: varnish
 
