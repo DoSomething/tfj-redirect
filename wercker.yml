@@ -5,7 +5,7 @@ build:
             name: install dependencies
             code: |-
                 cd www
-                composer install --no-interaction
+                composer install --dev --no-dev --no-interaction
 deploy:
     steps:
         - script :
