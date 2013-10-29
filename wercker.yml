@@ -1,11 +1,32 @@
 box: wercker/php
 build:
-  steps:
-    - script:
-        name: install dependencies
-        code: |-
-            cd www
-            composer install --no-interaction
+    steps:
+        - script:
+            name: install dependencies
+            code: |-
+                cd www
+                composer install --no-interaction
 deploy:
     steps:
-        - cap
+        - script :
+            name: install ruby and bundler
+            code: |-
+              export RUBYVERSION=1.9.3-p429
+              sudo apt-get update
+              sudo apt-get install git zlib1g-dev libreadline-dev libqtwebkit-dev
+              sudo apt-get remove ruby1.9.1
+              cd $HOME
+              mkdir rubyinstall
+              cd rubyinstall
+              wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-$RUBYVERSION.tar.gz
+              tar xzvf ruby-$RUBYVERSION.tar.gz
+              cd ruby-$RUBYVERSION
+              ./configure --with-readline-dir=/usr/include/readline --with-openssl-dir=/usr/include/openssl
+              make
+              make test
+              sudo make install
+              cd $HOME
+              rm -fr rubyinstall
+              echo "gem: --no-rdoc --no-ri" >> $HOME/.gemrc
+              sudo gem install bundler -v "1.3"
+        #- cap
