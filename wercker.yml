@@ -1,7 +1,1 @@
 box: wercker/php
-build:
-  steps:
-    - script:
-        name: install dependencies
-        code: |-
-            composer install --no-interaction
