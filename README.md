@@ -28,14 +28,28 @@ Varnish is configured simply to pass all requests on to the app.
 Testing
 =======
 
-To test redirects, pass a two-letter country code via GET:
+To test redirects at the app level, pass a two-letter country code via GET:
 
-[http://localhost:12122/?country=CA](http://localhost:12122/?country=CA)
+[http://localhost:12121/?country=CA](http://localhost:12121/?country=CA)
 
 To view the redirect result without getting served a 302, add a `debug=1`:
 
-[http://localhost:12122/?country=CA&debug=1](http://localhost:12122/?country=CA&debug=1)
+[http://localhost:12121/?country=CA&debug=1](http://localhost:12121/?country=CA&debug=1)
 
 To run (incredibly minimalist) unit tests from within the vagrant instance:
 
 `cd /vagrant/www && phpunit`
+
+To test IP-based redirects in Varnish, simply hit [http://localhost:12122](http://localhost:12122) while running `varnishlog` within Vagrant. You should see the IP match and response in the log.
+
+Implementation Details
+======================
+
+The VCL project is courtesy of Opera Software: [https://github.com/cosimo/varnish-geoip](https://github.com/cosimo/varnish-geoip)
+
+The GeoIP database is from MaxMind: [http://dev.maxmind.com/geoip/legacy/downloadable/](http://dev.maxmind.com/geoip/legacy/downloadable/)
+
+The GeoIP C API needed to be installed to enable the VCL build: [https://github.com/maxmind/geoip-api-c](https://github.com/maxmind/geoip-api-c)
+
+Salt auto-installs the pre-built geoapi.vcl in /etc/varnish/. The GeoIP .dat file needs to live at /usr/share/lib/GeoIP.
+
