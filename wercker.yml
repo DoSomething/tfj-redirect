@@ -4,6 +4,7 @@ build:
         - script:
             name: install composer packages
             code: |-
+                cd www
                 composer install --no-interaction --prefer-source
 deploy:
     steps:
