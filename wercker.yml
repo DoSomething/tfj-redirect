@@ -2,15 +2,15 @@ box: wercker/php
 build:
     steps:
         - script:
-            name: install dependencies
+            name: install composer packages
             code: |-
                 cd www
                 composer install --no-interaction --prefer-source
 deploy:
     steps:
         - script :
-            name: install bundler
+            name: installs bundler
             code: |-
               sudo gem install bundler -v "1.3"
-              cd www
+              cd www 
         - cap
