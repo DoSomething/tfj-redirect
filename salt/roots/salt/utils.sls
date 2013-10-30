@@ -1,5 +1,10 @@
 {% if grains['os'] == 'Ubuntu' %}
 
+
+apt-update:
+  cmd.run:
+    - name: sudo apt-get update
+
 curl:
   pkg:
     - installed
