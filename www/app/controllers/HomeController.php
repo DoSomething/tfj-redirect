@@ -65,7 +65,8 @@ class HomeController extends BaseController {
 
     $country = ('None' == $country) ? 'US' : $country;
 
-    return $redirectTargets[$country];
+    // Default to US if no redirect specified.
+    return (empty($redirectTargets[$country])) ? $redirectTargets['US'] : $redirectTargets[$country];
   }
 
   /**
@@ -82,6 +83,10 @@ class HomeController extends BaseController {
    * Safely retrieve X-Geo-IP header contents. Allow for a test
    * override via "country" GET param, or $header.
    *
+   * Any failure to identify a country, or to match the country
+   * against a specified redirect, will result in redirecting to
+   * the US target.
+   *
    * @param string $header      Optional two-letter country code.
    * @throws Exception
    * @return string
@@ -94,10 +99,20 @@ class HomeController extends BaseController {
 
     $header = (empty($header)) ? Request::query('country') : $header;
 
+    $response = 'None';
+
+    // Sample X-Geo-IP header from Varnish:
+    // X-Geo-IP: city:Brooklyn, country:US, lat:40.650101, lon:-73.949600, ip:108.29.139.43
     if (empty($header))
     {
       $header = Request::header('X-Geo-IP');
-      $response = str_replace('country:', '', $header);
+
+      $m = array();
+      if (preg_match('/country:([A-Z]{2})/', $header, $m))
+      {
+        $response = $m[1];
+      }
+
     }
     else
     {
