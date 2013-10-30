@@ -8,9 +8,17 @@ build:
                 composer install --no-interaction --prefer-source
 deploy:
     steps:
-        - script :
+        - script:
             name: installs bundler
             code: |-
-              sudo gem install bundler -v "1.3"
-              cd www 
-        - cap
+                sudo gem install bundler -v "1.3"
+                cd www 
+        - script:
+            name: install capistrano
+            code: |-
+                sudo gem install capistrano
+        - script:
+            name: deploy from capistrano
+            code: |-
+                cd www
+                cap deploy
