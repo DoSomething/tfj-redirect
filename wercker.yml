@@ -12,4 +12,5 @@ deploy:
             name: install bundler
             code: |-
               sudo gem install bundler -v "1.3"
+              cd www
         - cap
