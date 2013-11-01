@@ -47,6 +47,8 @@ Implementation Details
 
 The VCL project is courtesy of Opera Software: [https://github.com/cosimo/varnish-geoip](https://github.com/cosimo/varnish-geoip)
 
+We are using this fork, which has some important config changes for Varnish startup and custom C function handling: [https://github.com/montaguethomas/varnish-geoip](https://github.com/montaguethomas/varnish-geoip)
+
 The GeoIP database is from MaxMind: [http://dev.maxmind.com/geoip/legacy/downloadable/](http://dev.maxmind.com/geoip/legacy/downloadable/)
 
 The GeoIP C API needed to be installed to enable the VCL build: [https://github.com/maxmind/geoip-api-c](https://github.com/maxmind/geoip-api-c)
