@@ -12,7 +12,7 @@ return array(
   */
   'tfj-redirects' => array(
     'CA' => 'http://www.dosomethingca.org/teensforjeans',
-    'US' => 'http://www.dosomething.org/teensforjeans',
+    'US' => 'https://www.dosomething.org/campaigns/teens-jeans',
   ),
 
   /*
