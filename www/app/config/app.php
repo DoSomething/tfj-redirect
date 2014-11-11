@@ -11,7 +11,7 @@ return array(
   |
   */
   'tfj-redirects' => array(
-    'CA' => 'http://www.dosomethingca.org/teensforjeans',
+    'CA' => 'https://canada.dosomething.org/campaigns/teens-jeans',
     'US' => 'https://www.dosomething.org/campaigns/teens-jeans',
   ),
 
