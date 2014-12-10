@@ -33,7 +33,7 @@ sub vcl_recv {
 
   # Allow the backend to serve up stale content if it is responding slowly.
   set req.grace = 6h;
-  
+
   # Lookup IP only for the first request restart
   if (req.restarts == 0) {
       if (req.request == "GET" || req.request == "POST") {
@@ -42,7 +42,16 @@ sub vcl_recv {
           }C
       }
   }
-  
+
+  # Handle ryansplaybook.com requests without hitting Laravel
+  if (req.http.host ~ "ryansplaybook.com") {
+    if (req.http.X-Geo-IP ~ "country:CA") {
+      error 750 "CA";
+    } else {
+      error 750 "US";
+    }
+  }
+
   # Pass directly to app server for now.
   return (pass);
 }
@@ -64,6 +73,17 @@ sub vcl_error {
   # set obj.status = 302;
   # set obj.http.Location = "http://backup.example.com/";
   #}
+
+  ## Ryan's Playbook redirects.
+  if (obj.status == 750) {
+    if (obj.response ~ "CA") {
+      set obj.http.Location = "https://www.dosomething/testryanCA";
+    } else {
+      set obj.http.Location = "https://www.dosomething/testryanUS";
+    }
+    set obj.status = 302;
+    return(deliver);
+  }
 
   # Otherwise redirect to the homepage, which will likely be in the cache.
   set obj.http.Content-Type = "text/html; charset=utf-8";

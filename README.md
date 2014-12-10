@@ -54,3 +54,5 @@ The GeoIP database is from MaxMind: [http://dev.maxmind.com/geoip/legacy/downloa
 The GeoIP C API needed to be installed to enable the VCL build: [https://github.com/maxmind/geoip-api-c](https://github.com/maxmind/geoip-api-c)
 
 Salt auto-installs the pre-built geoapi.vcl in /etc/varnish/. The GeoIP .dat file needs to live at /usr/share/lib/GeoIP.
+
+Having trouble starting Varnish? See [this discussion of the init.d script](http://stackoverflow.com/questions/5906603/varnish-daemon-opts-options-errors).
