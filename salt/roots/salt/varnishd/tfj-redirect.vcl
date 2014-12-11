@@ -44,7 +44,7 @@ sub vcl_recv {
   }
 
   # Handle ryansplaybook.com requests without hitting Laravel
-  if (req.http.host ~ "ryansplaybook.com") {
+  if (req.http.host ~ "ryansplaybooks.com") {
     if (req.http.X-Geo-IP ~ "country:CA") {
       error 750 "CA";
     } else {
