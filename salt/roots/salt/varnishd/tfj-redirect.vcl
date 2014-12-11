@@ -77,9 +77,9 @@ sub vcl_error {
   ## Ryan's Playbook redirects.
   if (obj.status == 750) {
     if (obj.response ~ "CA") {
-      set obj.http.Location = "https://www.dosomething/testryanCA";
+      set obj.http.Location = "https://canada.dosomething.org/campaigns/ryans-playbooks";
     } else {
-      set obj.http.Location = "https://www.dosomething/testryanUS";
+      set obj.http.Location = "https://www.dosomething.org/campaigns/ryans-playbooks";
     }
     set obj.status = 302;
     return(deliver);
